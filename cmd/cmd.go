@@ -155,7 +155,11 @@ func (o *options) Complete(args []string) error {
 
 func (o *options) Validate() error {
 	if !o.prompt && o.podQuery == "" && o.resource == "" && o.selector == "" && o.fieldSelector == "" {
-		return errors.New("One of pod-query, --selector, --field-selector or --prompt is required")
+		var s = "all namespaces"
+		if !o.allNamespaces {
+			s = strings.Join(o.namespaces, ", ")
+		}
+		fmt.Fprintf(o.ErrOut, "Neither pod-query, --selector, --field-selector or --prompt given: tailing all containers in %s\n", s)
 	}
 	if o.selector != "" && o.resource != "" {
 		return errors.New("--selector and the <resource>/<name> query can not be set at the same time")

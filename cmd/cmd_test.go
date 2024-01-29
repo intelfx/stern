@@ -109,7 +109,7 @@ func TestOptionsValidate(t *testing.T) {
 		{
 			"No required options",
 			NewOptions(streams),
-			"One of pod-query, --selector, --field-selector or --prompt is required",
+			"",
 		},
 		{
 			"Specify both selector and resource",
